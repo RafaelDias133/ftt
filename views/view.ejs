@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css"> 
+</head>
+<body>
+    <h1>To-Do List</h1>
+    
+    <form action="/tasks" method="POST">
+        <input type="text" name="title" placeholder="Enter a task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    
+    <ul>
+        <% tasks.forEach((task) => { %>
+            <li>
+                <span class="task-title <%= task.completed ? 'completed' : '' %>"><%= task.title %></span>
+                <form action="/tasks/<%= task.id %>/complete" method="POST" style="display: inline;">
+                    <button type="submit" <%= task.completed ? 'disabled' : '' %>>Mark as Completed</button>
+                </form>
+                <form action="/tasks/<%= task.id %>/update" method="POST" style="display: inline;">
+                    <input type="text" name="title" placeholder="New Title" required>
+                    <button type="submit" <%= task.completed ? 'disabled' : '' %>>Update</button>
+                </form>
+                <form action="/tasks/<%= task.id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
